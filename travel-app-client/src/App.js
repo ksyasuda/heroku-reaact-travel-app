@@ -29,7 +29,7 @@ class App extends Component {
 				</header>
 				<div id="container" className="App">
 					<Switch>
-						{/* <Route path="/all-locations" component={AllLocations} /> */}
+						<Route path="/all-locations" component={AllLocations} />
 						<Route path="/" component={MyMap}/>
 					</Switch>
 					{/* <MyMap /> */}
