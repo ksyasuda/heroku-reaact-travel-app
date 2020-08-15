@@ -25,7 +25,7 @@ app.listen(port, () => {
 	// console.log(process.env.PORT)
 });
 
-app.get('/api', (request, response) => {
+app.get('/loc', (request, response) => {
     db.find({}, (err, data) => {
         console.log(data);
         if(err) {
