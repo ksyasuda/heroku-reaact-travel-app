@@ -1,0 +1,26 @@
+.Button {
+    background-color: green;
+    /* border: none; */
+    color: blue;
+    /* outline: none; */
+    cursor: pointer;
+    margin: 8px;
+	font-weight: bold;
+	padding: 10px;
+	width: 18%;
+}
+
+@media (max-width: 619px) {
+	.Button {
+		word-spacing: 40px;
+	}
+}
+
+.Button:active {
+    color: #944317;
+}
+
+.Button:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+}

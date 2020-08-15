@@ -1,0 +1,192 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+li {
+	position: relative;
+	list-style-type: none;
+	margin: 10px;
+	display: inline-block;
+	border: 2px solid black;
+	background-color: lightblue;
+	padding: 5px 5px;
+	width: 10%;
+	text-align: center;
+	bottom: -10px;
+}
+
+#navbar {
+	position: relative;
+	background-color: rgb(40, 44, 52);
+	height: 80px;
+	top: -18px;
+}
+
+#titlebar {
+	left:14.5%;
+	font-weight: bold;
+	width: 20%;
+	padding-block: 7px 8px;
+	color: rgb(230, 122, 108);
+	font-size: large;
+	background:none;
+	border: none;
+}
+
+@media (max-width: 1249px) {
+	li {
+		position: relative;
+		list-style-type: none;
+		margin: 10px;
+		display: inline-block;
+		border: 2px solid black;
+		background-color: lightblue;
+		padding: 5px 5px;
+		width: 15%;
+		text-align: center;
+		bottom: -15px;
+	}
+	
+	#navbar {
+		position: relative;
+		background-color: rgb(40, 44, 52);
+		height: 100px;
+		top: -18px;
+	}
+
+	#titlebar {
+		left:-2px;
+		font-weight: bold;
+		width: 20%;
+		padding-block: 7px 8px;
+		color: rgb(230, 122, 108);
+		font-size: large;
+		background: none;
+		border: none;
+		top: 15px;
+	}
+}
+
+@media (max-width: 864px) {
+	li {
+		position: relative;
+		list-style-type: none;
+		margin: 10px;
+		display: inline-block;
+		border: 2px solid black;
+		background-color: lightblue;
+		padding: 5px 5px;
+		width: 13%;
+		text-align: center;
+		bottom: -15px;
+		word-spacing: 12px;
+	}
+	
+	#navbar {
+		position: relative;
+		background-color: rgb(40, 44, 52);
+		height: 100px;
+		top: -18px;
+	}
+
+	#titlebar {
+		left:-15px;
+		top: 5px;
+		font-weight: bold;
+		width: 25%;
+		padding-block: 7px 8px;
+		color: rgb(230, 122, 108);
+		font-size: large;
+		background: none;
+		border: none;
+		word-spacing: 0px;
+	}
+}
+
+@media (max-width: 608px) {
+	li {
+		position: relative;
+		list-style-type: none;
+		margin: 10px;
+		display: inline-block;
+		border: 2px solid black;
+		background-color: lightblue;
+		padding: 5px 5px;
+		width: 18%;
+		text-align: center;
+		bottom: -15px;
+		word-spacing: 12px;
+		left: -40px;
+	}
+	
+	#navbar {
+		position: relative;
+		background-color: rgb(40, 44, 52);
+		height: 100px;
+		top: -18px;
+	}
+
+	#titlebar {
+		left:-70px;
+		top: 14px;
+		font-weight: bold;
+		width: 25%;
+		padding-block: 7px 8px;
+		color: rgb(230, 122, 108);
+		font-size: large;
+		background: none;
+		border: none;
+		word-spacing: 0px;
+	}
+}
+
+
+#title {
+	color: blue;
+	border: 1px solid black;
+	display: inline-block;
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-bottom: 3px;
+	background-color: hotpink;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.leaflet-container {
+	height: 400px;
+	width: 100%;
+  }
