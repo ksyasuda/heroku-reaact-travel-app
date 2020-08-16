@@ -26,7 +26,7 @@ app.listen(port, () => {
 });
 
 
-app.get('/.well-known/acme-challenge/HvqAU3MgNdnhvYtZy1ICMt2nfgeGE-cDxsRIJTqzCho', function(req, res) => {
+app.get('/.well-known/acme-challenge/HvqAU3MgNdnhvYtZy1ICMt2nfgeGE-cDxsRIJTqzCho', function(req, res) {
 	res.send('p2U5MfxOgYVUlUEyg_2xctse-FPUN4GQHGzEqeTW04I.t2kdkEtJxg6NX0Ht1aAUOwKGpI3Qm4U7F03k5-zsFpU');
 });
 
