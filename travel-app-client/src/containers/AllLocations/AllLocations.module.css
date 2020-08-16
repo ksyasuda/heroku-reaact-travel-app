@@ -1,11 +1,62 @@
 .Button {
 	background-color: green;
-    /* border: none; */
     color: blue;
-    /* outline: none; */
+	text-align: center;
     cursor: pointer;
-    margin: 2px;
 	font-weight: bold;
 	padding: 3px;
-	width: 85%;
+	width: 45%;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.Input {
+	display: flex;
+	width: 60%;
+	height: 40px;
+	text-align: center;
+	align-items: center;
+}
+
+.Form {
+	position: relative;
+	width: 60%;
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	text-align: center;
+	justify-content: center;
+	left: 20%;
+	align-items: center;
+	justify-content: center;
+}
+
+.Select {
+	background-color: green;
+	color: blue;
+	width: 60%;
+	height: 40px;
+	font-weight: bold;
+	font-size: x-large;
+	margin: none;
+	position: relative;
+	left: -2px;
+	box-sizing: border-box;
+	border-left: 2px solid black;
+	border-bottom: 2px solid black;
+}
+
+.Select:hover {
+	border-color: blue;
+}
+
+.Select:focus {
+	border-color: purple;
+}
+
+.Option {
+	border: 5px solid black;
+	box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
 }

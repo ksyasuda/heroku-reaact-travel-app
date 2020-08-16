@@ -4,6 +4,7 @@ import Button from '../../components/UI/Button/Button';
 import Success from '../../components/Success/Success';
 import axios from 'axios';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import classes from './MyMap.module.css';
 
 const { Map: LeafletMap, TileLayer, Marker, Popup } = ReactLeaflet
 
@@ -17,8 +18,11 @@ class MyMap extends Component {
 			markers: [],
 			counter: 1,
 			locName: null,
+			shorName: null,
 			place_id: null,
-			success: null
+			success: null,
+			uploading: false,
+			opacity: 1
 		};
 	}
 	// state = {
@@ -26,11 +30,6 @@ class MyMap extends Component {
 	// 	lng: null,
 	// 	zoom: null
 	// }
-
-	findMe = () => {
-		this.getLocation();
-		this.setMarker();
-	}
 
 	getLocation = () => {
 		if ('geolocation' in navigator) {
@@ -42,14 +41,38 @@ class MyMap extends Component {
 				document.getElementById('lng').innerText = lng;
 				 // [lat, lon] = [37.636845, -118.986252]; //Mammoth Mtn
 				let geocodingUrl = `geocode-location/${lat},${lng}`;
-				console.log(geocodingUrl);
+				// console.log(geocodingUrl);
+				let loading = this.state.loading;
+				loading = (
+					<Popup
+						className={classes.Popup}
+						position={[lat,lng]}
+						onOpen={this.loadingHandler}
+						onClose={this.finishLoadingHandler}>
+						{<Spinner/>}
+					</Popup>
+				);
+				this.setState({loading:loading});
 				const response = await axios.get(geocodingUrl);
+				this.setState({loading:null})
 				// console.log(response.data.results[0].formatted_address);
-				console.log(response);
+				// console.log(response);
 				const address = response.data.results[0].formatted_address;
+				console.log(response.data.results[0].address_components);
+				// const shortName = response.data.results[0].address_components[0].long_name;
+				let temp = address.split(',');
+				let shortName;
+				//! street, location, state/zip, country
+				if(temp.length === 4){
+					shortName = temp[1]; //location
+				}
+				//! location, state/zip, country
+				else if(temp.length < 4) {
+					shortName = temp[0];
+				}
 				const id = response.data.results[0].place_id;
 				// console.log(lat, lng);
-				this.setState({lat:lat,lng:lng,locName:address, place_id: id});
+				this.setState({lat:lat,lng:lng,locName:address, place_id: id,shortName:shortName});
 				setTimeout(() => {
 					// console.log('setting state in getLocation()');
 					if(this.state.markers.length < 1)
@@ -83,8 +106,8 @@ class MyMap extends Component {
 	}
 	
 
-	setLocation = (lat, lng, name, id) => {
-		this.setState({lat:lat,lng:lng,locName:name,place_id:id});
+	setLocation = (lat, lng, name, id, shortName) => {
+		this.setState({lat:lat,lng:lng,locName:name,place_id:id,shortName:shortName});
 		if(this.state.markers.length < 1) {
 			this.setMarker();
 		} else {
@@ -103,15 +126,38 @@ class MyMap extends Component {
 			}
 			// console.log(address);
 			let url = `geocode-address/${address}`;
+			let loading = this.state.loading;
+			loading = (
+				<Popup
+					className={classes.Popup}
+					position={[this.state.lat,this.state.lng]}
+					onOpen={this.loadingHandler}
+					onClose={this.finishLoadingHandler}>
+					{<Spinner/>}
+				</Popup>
+			);
+			this.setState({loading:loading});
 			const response = await axios.get(url);
+			this.setState({loading:null})
 			// console.log(response);
-			let lat, lng, name, place_id;
+			let lat, lng, name, place_id, shortName;
 			if(response.data) {
 				lat = response.data.results[0].geometry.location.lat;
 				lng = response.data.results[0].geometry.location.lng;
 				name = response.data.results[0].formatted_address;
 				place_id = response.data.results[0].place_id;
-				this.setLocation(lat, lng, name, place_id);
+				console.log(response.data.results)
+				let temp = name.split(',');
+				//! street, location, state/zip, country
+				if(temp.length === 4){
+					shortName = temp[1]; //location
+				}
+				//! location, state/zip, country
+				else if(temp.length < 4) {
+					shortName = temp[0];
+				}
+				// shortName = response.data.results[0].address_components[0].long_name;
+				this.setLocation(lat, lng, name, place_id, shortName);
 			} 	
 	}
 
@@ -138,15 +184,27 @@ class MyMap extends Component {
             const locName = this.state.locName;
 			const place_id = this.state.place_id;
 			const entryNum = this.state.counter;
-            const data = {locName, place_id, lat, lng, time, entryNum};
-            console.log('fetching');
+			const shortName = this.state.shortName;
+            const data = {locName, shortName, place_id, lat, lng, time, entryNum};
+			console.log('fetching');
+			let loading = this.state.loading;
+			loading = (
+				<Popup
+					className={classes.Popup}
+					position={[lat,lng]}
+					onOpen={this.loadingHandler}
+					onClose={this.finishLoadingHandler}>
+					{<Spinner/>}
+				</Popup>
+			);
+			this.setState({loading:loading});
 			const response = await axios.post('/api', data);
 			console.log(response);
 			this.clearState();
 			let success = this.state.success;
 			// success = <Success />;
 			success = <Spinner/>;
-			this.setState({success:success, counter: this.state.counter + 1});
+			this.setState({success:success, counter: this.state.counter + 1, loading:null});
 			setTimeout(() => {
 				let s = this.state.success;
 				s = null;
@@ -166,9 +224,13 @@ class MyMap extends Component {
     return (
 		<div>
 			<h2>Travel Locations</h2>
-			<LeafletMap center={[this.state.lat, this.state.lng]}
-			zoom={this.state.zoom} style={{'width':'80%', 'position':'relative', 'left':'10%', 'border':'1px solid hotpink'}}>
+			<LeafletMap 
+				center={[this.state.lat, this.state.lng]}
+				zoom={this.state.zoom} 
+				style={{'width':'80%', 'position':'relative', 'left':'10%', 'border':'1px solid hotpink'}}
+				>
 				<TileLayer
+				opacity={this.state.opacity}
 				attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 				url='https://{s}.tile.osm.org/{z}/{x}/{y}.png'
 				/>
@@ -177,9 +239,10 @@ class MyMap extends Component {
 					NICE
 				</Popup>
 				</Marker> */}
+				{this.state.loading}
 				{this.state.markers}
 			</LeafletMap>
-			{this.state.success}
+			{/* {this.state.success} */}
 			<Button disabled={false} clicked={this.getLocation}>Find Location</Button>
 			<Button disabled={false} clicked={this.onSendHandler}>Send It!</Button>
 			<Button disabled={false} clicked={this.onZoomHandler}>Zoom

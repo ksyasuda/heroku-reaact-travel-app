@@ -124,6 +124,7 @@ app.post('/api', (request, response) => {
     response.json({
         status: 'Success! Added to the database',
 		name: data.locName,
+		shortName: data.shortName,
 		entryNum: data.entryNum,
         place_id: data.place_id,
         latitude: data.lat,

@@ -60,7 +60,8 @@ li {
 	}
 
 	#titlebar {
-		left:-2px;
+		/* left:-2px; */
+		margin-left: 35px;
 		font-weight: bold;
 		width: 20%;
 		padding-block: 7px 8px;
@@ -69,6 +70,77 @@ li {
 		background: none;
 		border: none;
 		top: 15px;
+	}
+}
+
+@media (min-width: 1005px) {
+	li {
+		position: relative;
+		list-style-type: none;
+		margin: 10px;
+		display: inline-block;
+		border: 2px solid black;
+		background-color: lightblue;
+		padding: 5px 5px;
+		width: 15%;
+		text-align: center;
+		bottom: -12px;
+	}
+	
+	#navbar {
+		position: relative;
+		background-color: rgb(40, 44, 52);
+		height: 100px;
+		top: -18px;
+	}
+
+	#titlebar {
+		left:20px;
+		margin-left: 35px;
+		font-weight: bold;
+		width: 20%;
+		padding-block: 7px 8px;
+		color: rgb(230, 122, 108);
+		font-size: large;
+		background: none;
+		border: none;
+		top: 15px;
+	}
+}
+
+@media (max-width: 1004px) {
+	li {
+		position: relative;
+		list-style-type: none;
+		margin: 10px;
+		display: inline-block;
+		border: 2px solid black;
+		background-color: lightblue;
+		padding: 5px 5px;
+		width: 15%;
+		text-align: center;
+		bottom: 15px;
+	}
+	
+	#navbar {
+		position: relative;
+		background-color: rgb(40, 44, 52);
+		height: 100px;
+		top: -18px;
+	}
+
+	#titlebar {
+		/* left:-2px; */
+		margin-left: 35px;
+		font-weight: bold;
+		width: 20%;
+		padding-block: 7px 8px;
+		color: rgb(230, 122, 108);
+		font-size: large;
+		background: none;
+		border: none;
+		top: 4px;
+		left: -2px;
 	}
 }
 
@@ -84,7 +156,7 @@ li {
 		width: 13%;
 		text-align: center;
 		bottom: -15px;
-		word-spacing: 12px;
+		word-spacing: 35px;
 	}
 	
 	#navbar {
@@ -95,7 +167,44 @@ li {
 	}
 
 	#titlebar {
-		left:-15px;
+		left:-5px;
+		top: 10px;
+		font-weight: bold;
+		width: 25%;
+		padding-block: 7px 8px;
+		color: rgb(230, 122, 108);
+		font-size: large;
+		background: none;
+		border: none;
+		word-spacing: 0px;
+	}
+}
+
+@media (max-width: 814px) {
+	li {
+		position: relative;
+		list-style-type: none;
+		margin: 10px;
+		display: inline-block;
+		border: 2px solid black;
+		background-color: lightblue;
+		padding: 5px 5px;
+		width: 15%;
+		text-align: center;
+		bottom: 8px;
+		word-spacing: 35px;
+		left: -40px;
+	}
+	
+	#navbar {
+		position: relative;
+		background-color: rgb(40, 44, 52);
+		height: 100px;
+		top: -18px;
+	}
+
+	#titlebar {
+		left:-40px;
 		top: 5px;
 		font-weight: bold;
 		width: 25%;
@@ -108,6 +217,17 @@ li {
 	}
 }
 
+
+#title {
+	color: blue;
+	border: 1px solid black;
+	display: inline-block;
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-bottom: 3px;
+	background-color: hotpink;
+}
+
 @media (max-width: 608px) {
 	li {
 		position: relative;
@@ -117,9 +237,9 @@ li {
 		border: 2px solid black;
 		background-color: lightblue;
 		padding: 5px 5px;
-		width: 18%;
+		width: 15%;
 		text-align: center;
-		bottom: -15px;
+		bottom: 8px;
 		word-spacing: 12px;
 		left: -40px;
 	}
@@ -132,8 +252,8 @@ li {
 	}
 
 	#titlebar {
-		left:-70px;
-		top: 14px;
+		left:-59px;
+		top: 5px;
 		font-weight: bold;
 		width: 25%;
 		padding-block: 7px 8px;

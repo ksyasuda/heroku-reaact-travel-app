@@ -8,6 +8,10 @@ import AllLocations from './containers/AllLocations/AllLocations'
 
 
 class App extends Component {
+	state = {
+		useDarkMode: false,
+	}
+
 	render() {
 		let style = {
 			'color':'green',
@@ -20,9 +24,9 @@ class App extends Component {
 					<nav>
 						<div id="navbar">
 							<ul>
-								<li><Link style={style} to="/">Travel Locations</Link></li>
+								<li><Link onClick={this.loadingHandler} style={style} to="/">Travel Locations</Link></li>
 								<li><Link style={style} to="/all-locations">All Locations</Link></li>
-								<li id="titlebar">React Travel App</li>
+								<li id="titlebar"><h2 style={{'textAlign':'center', 'display':'inline', 'float':'inline-start', 'position':'relative', 'left': '-16%'}}>React Travel App</h2></li>
 							</ul>
 						</div>
 					</nav>
