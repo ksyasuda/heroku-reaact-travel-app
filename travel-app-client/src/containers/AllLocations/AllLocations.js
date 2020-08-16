@@ -3,7 +3,7 @@ import * as ReactLeaflet from 'react-leaflet';
 import axios from 'axios';
 
 
-const { Map: LeafletMap, TileLayer, Marker, Popup } = ReactLeaflet
+const { Map: LeafletMap, TileLayer, Marker, Popup, FeatureGroup } = ReactLeaflet
 
 class AllLocations extends Component {
 	state = {
@@ -11,9 +11,53 @@ class AllLocations extends Component {
 		lng: -100,
 		markers: [],
 		places: new Map(),
+		markerGroup: [],
+		weather: null
 	}
 
+	setGroup = () => {
+		let markers = [...this.state.markers]
+		this.setState({markerGroup:(<FeatureGroup>{markers}</FeatureGroup>)});
+	}
+
+	popup = async (lat, lng) => {
+		let message = this.state.weather;
+		const response = await axios.get(`/weather/${lat},${lng}`);
+		// console.log(response);
+		let temp = response.data.current.feels_like;
+		let weather = response.data.current.weather[0].description;
+		let l = this.state.lat;
+		let lg = this.state.lng;
+		l = lat;
+		lg = lng;
+		message = `The temperature is currently ${temp} with ${weather}`;
+		this.setState({weather:message});
+	}
+
+	setMarkers = ()  => {
+		let ctr = 1;
+		let markers = [...this.state.markers];
+		let group = [...this.state.markerGroup];
+		let lat, lng;
+		for(let elt of markers) {
+			[lat,lng] = elt;
+			let marker = (
+				<Marker position={[lat,lng]} key={ctr++}>
+					<Popup onOpen={(event) => this.popup(event)}>
+						A popup
+					</Popup>
+				</Marker>
+			);
+			group.push(marker);
+		}
+		this.setState({markerGroup:group});
+		console.log('markers set');
+		console.log(this.state.markerGroup);
+	}
+	
+
 	componentDidMount() {
+			// this.addEventListener();
 			console.log('All-locations MOUNT');
 			let url = `/loc`;
 			axios.get(url).then(response => {
@@ -65,10 +109,18 @@ class AllLocations extends Component {
 					root.className = 'all-locations';
 					root.append(name, date, br, loc, br);
 					document.body.append(root);
-					let marker = <Marker position={[lat,lng]} key={time} />;
-					markers.push(marker);
+					let latlng = [lat, lng];
+					// let marker = (
+					// 	<Marker position={[lat,lng]} key={time}>
+					// 		<Popup onOpen={(event) => this.popup(event)}>
+					// 		</Popup>
+					// 	</Marker>
+					// );
+					markers.push(latlng);
 				}
 				this.setState({markers:markers});
+				// this.setMarkers();
+				// this.setGroup();
 				});
 			console.log(this.state.markers);
 	}
@@ -93,12 +145,32 @@ class AllLocations extends Component {
 		console.log('[componentWillUnmount] end');
 	}
 	
+	popupCloseHandler = () => {
+		if(this.state.weather !== null && (this.state.weather !== undefined)) {
+			let message = this.state.weather;
+			message = null;
+			this.setState({weather:message});
+		}
+	}
 
+	onViewportChanged = viewport => {
+		// console.log(viewport);
+		let lat = this.state.lat;
+		let lng = this.state.lng;
+		let zoom = this.state.zoom;
+		lat = viewport.center[0];
+		lng = viewport.center[1];
+		zoom = viewport.zoom;
+		this.setState({lat:lat,lng:lng,zoom:zoom});
+	}
+	
 	render() {
+		// console.log(this.state.markerGroup);
+		let ctr = 1;
 		return (
-			<div>
+			<div id="map-container">
 				<h2>All Locations</h2>
-				<LeafletMap center={[this.state.lat, this.state.lng]} zoom={3} style={{'width':'80%', 'position':'relative', 'left':'10%', 'border':'1px solid hotpink'}}>
+				<LeafletMap onViewportChanged={(viewport) => this.onViewportChanged(viewport)} worldCopyJump={true} center={[this.state.lat, this.state.lng]} zoom={3} style={{'width':'80%', 'position':'relative', 'left':'10%', 'border':'1px solid hotpink'}}>
 					<TileLayer
 					attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 					url='https://{s}.tile.osm.org/{z}/{x}/{y}.png'
@@ -108,7 +180,16 @@ class AllLocations extends Component {
 						NICE
 					</Popup>
 					</Marker> */}
-					{this.state.markers}
+					{this.state.markers.map(marker => {
+						{/* console.log(marker); */}
+						return (
+							<Marker position={[marker[0], marker[1]]} key={ctr++}>
+								<Popup onClose={this.popupCloseHandler} onOpen={() => this.popup(marker[0], marker[1])}>
+									{this.state.weather}
+								</Popup>
+							</Marker>
+						)
+					})}
 				</LeafletMap>
 			</div>
 		);

@@ -26,6 +26,18 @@ app.listen(port, () => {
 });
 
 
+app.get('/weather/:lat,:lng', async (req, res) => {
+	let key = process.env.WEATHER_KEY;
+	let lat = req.params.lat;
+	let lng = req.params.lng;
+	const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&units=imperial&appid=${key}`;
+	const response = await fetch(url);
+	const json = await response.json();
+	// console.log(json);
+	res.json(json);
+});
+
+
 //app.get('/.well-known/acme-challenge/atymyzaDbnuYOusg7SQLspp56ox02OImq5gTFdYb6DU', function(req, res) {
 //	res.send('atymyzaDbnuYOusg7SQLspp56ox02OImq5gTFdYb6DU.t2kdkEtJxg6NX0Ht1aAUOwKGpI3Qm4U7F03k5-zsFpU');
 //});
