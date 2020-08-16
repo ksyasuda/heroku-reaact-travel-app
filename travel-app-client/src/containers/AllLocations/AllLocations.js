@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import * as ReactLeaflet from 'react-leaflet';
 import axios from 'axios';
+import Button from '../../components/UI/Button/Button';
+import classes from './AllLocations.module.css';
+import {Redirect} from 'react-router-dom';
 
 
 const { Map: LeafletMap, TileLayer, Marker, Popup, FeatureGroup } = ReactLeaflet
@@ -12,12 +15,9 @@ class AllLocations extends Component {
 		markers: [],
 		places: new Map(),
 		markerGroup: [],
-		weather: null
-	}
-
-	setGroup = () => {
-		let markers = [...this.state.markers]
-		this.setState({markerGroup:(<FeatureGroup>{markers}</FeatureGroup>)});
+		weather: null,
+		popup: false,
+		redirect: false
 	}
 
 	popup = async (lat, lng) => {
@@ -26,12 +26,16 @@ class AllLocations extends Component {
 		// console.log(response);
 		let temp = response.data.current.feels_like;
 		let weather = response.data.current.weather[0].description;
-		let l = this.state.lat;
-		let lg = this.state.lng;
-		l = lat;
-		lg = lng;
 		message = `The temperature is currently ${temp} with ${weather}`;
-		this.setState({weather:message});
+		this.setState({weather:message, popup:true});
+	}
+
+	popupCloseHandler = () => {
+		if(this.state.weather !== null && (this.state.weather !== undefined)) {
+			let message = this.state.weather;
+			message = null;
+			this.setState({weather:message, popup:false});
+		}
 	}
 
 	setMarkers = ()  => {
@@ -50,25 +54,27 @@ class AllLocations extends Component {
 			);
 			group.push(marker);
 		}
-		this.setState({markerGroup:group});
-		console.log('markers set');
-		console.log(this.state.markerGroup);
+		this.setState({markerGroup:group, popup:true});
+		// console.log('markers set');
+		// console.log(this.state.markerGroup);
 	}
 	
 
-	componentDidMount() {
+	componentDidMount = () => {
 			// this.addEventListener();
-			console.log('All-locations MOUNT');
+			// console.log('All-locations MOUNT');
 			let url = `/loc`;
 			axios.get(url).then(response => {
-				console.log('right after the get call');
-				console.log(response);
+				// console.log('response', response);
+				if(response.data.length < 1) return;
+				// console.log('right after the get call');
 				let data = response.data;
 				// console.log(response);
 				let lat, lng, locName, place_id, time;
 				let counter = 1;
 				let markers = [...this.state.markers];
 				for(let item of data) {
+					// console.log('item', item);
 					lat = item.lat;
 					lng = item.lng;
 					locName = item.locName;
@@ -121,8 +127,8 @@ class AllLocations extends Component {
 				this.setState({markers:markers});
 				// this.setMarkers();
 				// this.setGroup();
-				});
-			console.log(this.state.markers);
+			});
+			// console.log(this.state.markers);
 	}
 
 	componentWillUnmount = () => {
@@ -144,17 +150,10 @@ class AllLocations extends Component {
 		console.log(this.state.markers);
 		console.log('[componentWillUnmount] end');
 	}
-	
-	popupCloseHandler = () => {
-		if(this.state.weather !== null && (this.state.weather !== undefined)) {
-			let message = this.state.weather;
-			message = null;
-			this.setState({weather:message});
-		}
-	}
 
-	onViewportChanged = viewport => {
-		// console.log(viewport);
+	onViewportChangedHandler = viewport => {
+		if(this.state.popup) return;
+		console.log(viewport);
 		let lat = this.state.lat;
 		let lng = this.state.lng;
 		let zoom = this.state.zoom;
@@ -163,25 +162,40 @@ class AllLocations extends Component {
 		zoom = viewport.zoom;
 		this.setState({lat:lat,lng:lng,zoom:zoom});
 	}
+
+	onRemoveDataHandler = async () => {
+		if(this.state.markers.length < 1) return;
+		const response = await axios.post('/remove-all', {});
+		console.log(response);
+		// document.location.reload(true);
+		this.setState({redirect:true});
+	}
+
+	onRemoveEltHandler = async () => {
+		if(this.state.markers.length < 1) return;
+		let stuff = document.getElementById('eltId');
+		let num = parseInt(stuff.value, 10);
+		// console.log(stuff.value);
+		const data = {entryNum: num};
+		const response = await axios.post(`/remove-elt`, data);
+		console.log(response);
+		document.location.reload(true);
+	}
 	
 	render() {
 		// console.log(this.state.markerGroup);
 		let ctr = 1;
 		return (
 			<div id="map-container">
+				{this.state.redirect ? <Redirect to='/'/> : null}
 				<h2>All Locations</h2>
-				<LeafletMap onViewportChanged={(viewport) => this.onViewportChanged(viewport)} worldCopyJump={true} center={[this.state.lat, this.state.lng]} zoom={3} style={{'width':'80%', 'position':'relative', 'left':'10%', 'border':'1px solid hotpink'}}>
+				<LeafletMap onViewportChanged={(viewport) => this.onViewportChangedHandler(viewport)} worldCopyJump={true} center={[this.state.lat, this.state.lng]} zoom={3} style={{'width':'80%', 'position':'relative', 'left':'10%', 'border':'1px solid hotpink'}}>
 					<TileLayer
 					attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 					url='https://{s}.tile.osm.org/{z}/{x}/{y}.png'
 					/>
-					{/* <Marker position={position}>
-					<Popup>
-						NICE
-					</Popup>
-					</Marker> */}
-					{this.state.markers.map(marker => {
-						{/* console.log(marker); */}
+					{this.state.markers.length > 0 ? this.state.markers.map(marker => {
+						{/* console.log(this.state.markers.length); */}
 						return (
 							<Marker position={[marker[0], marker[1]]} key={ctr++}>
 								<Popup onClose={this.popupCloseHandler} onOpen={() => this.popup(marker[0], marker[1])}>
@@ -189,8 +203,18 @@ class AllLocations extends Component {
 								</Popup>
 							</Marker>
 						)
-					})}
+					}) : null}
 				</LeafletMap>
+				<Button disabled={this.state.markers.length > 1 ? true : false} style={{'position':'relative','top':'24px'}} id="delete" disabled={false} clicked={this.onRemoveDataHandler}>
+					Delete all Data
+				</Button>
+				<form style={{'display':'inline-block', 'position':'relative','top':'16px'}}>
+					<input id="eltId" type="text" style={{'width':'80%'}} name="delete entry"/>
+					<br/>
+					<button className={classes.Button} onClick={this.onRemoveEltHandler} type="button">
+						Delete Entry By Number
+					</button>
+				</form>
 			</div>
 		);
 	};

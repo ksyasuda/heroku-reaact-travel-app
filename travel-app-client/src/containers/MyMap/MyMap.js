@@ -3,6 +3,7 @@ import * as ReactLeaflet from 'react-leaflet';
 import Button from '../../components/UI/Button/Button';
 import Success from '../../components/Success/Success';
 import axios from 'axios';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 const { Map: LeafletMap, TileLayer, Marker, Popup } = ReactLeaflet
 
@@ -69,7 +70,7 @@ class MyMap extends Component {
 		);
 		let markers = [...this.state.markers];
 		markers.push(x);
-		this.setState({markers:markers, counter: this.state.counter + 1});
+		this.setState({markers:markers});
 	}
 
 	moveMarker = () => {
@@ -78,7 +79,7 @@ class MyMap extends Component {
 		let markers = [this.state.markers];
 		markers.pop();
 		markers.push(x);
-		this.setState({markers:markers, counter: this.state.counter + 1});
+		this.setState({markers:markers});
 	}
 	
 
@@ -135,15 +136,17 @@ class MyMap extends Component {
 			let lng = this.state.lng;
             const time = Date.now();
             const locName = this.state.locName;
-            const place_id = this.state.place_id;
-            const data = {locName, place_id, lat, lng, time};
+			const place_id = this.state.place_id;
+			const entryNum = this.state.counter;
+            const data = {locName, place_id, lat, lng, time, entryNum};
             console.log('fetching');
 			const response = await axios.post('/api', data);
 			console.log(response);
 			this.clearState();
 			let success = this.state.success;
-			success = <Success />;
-			this.setState({success:success});
+			// success = <Success />;
+			success = <Spinner/>;
+			this.setState({success:success, counter: this.state.counter + 1});
 			setTimeout(() => {
 				let s = this.state.success;
 				s = null;
@@ -163,7 +166,6 @@ class MyMap extends Component {
     return (
 		<div>
 			<h2>Travel Locations</h2>
-			{this.state.success}
 			<LeafletMap center={[this.state.lat, this.state.lng]}
 			zoom={this.state.zoom} style={{'width':'80%', 'position':'relative', 'left':'10%', 'border':'1px solid hotpink'}}>
 				<TileLayer
@@ -177,6 +179,7 @@ class MyMap extends Component {
 				</Marker> */}
 				{this.state.markers}
 			</LeafletMap>
+			{this.state.success}
 			<Button disabled={false} clicked={this.getLocation}>Find Location</Button>
 			<Button disabled={false} clicked={this.onSendHandler}>Send It!</Button>
 			<Button disabled={false} clicked={this.onZoomHandler}>Zoom
