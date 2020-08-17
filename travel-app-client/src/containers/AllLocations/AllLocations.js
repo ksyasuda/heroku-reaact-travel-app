@@ -199,8 +199,8 @@ class AllLocations extends Component {
 		const response = await axios.post(`/remove-elt`, data);
 		console.log(response);
 		// this.props.history.push('/');
-		document.location.reload(true);
-		// this.setState({redirect:true});
+		// document.location.reload(true);
+		this.setState({redirect:true});
 	}
 	
 	render() {
