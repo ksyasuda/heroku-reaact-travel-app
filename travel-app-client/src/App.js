@@ -24,9 +24,9 @@ class App extends Component {
 					<nav>
 						<div id="navbar">
 							<ul>
-								<li><Link onClick={this.loadingHandler} style={style} to="/">Travel Locations</Link></li>
-								<li><Link style={style} to="/all-locations">All Locations</Link></li>
-								<li id="titlebar"><h2 style={{'textAlign':'center', 'display':'inline', 'float':'inline-start', 'position':'relative', 'left': '-16%'}}>React Travel App</h2></li>
+								<li className="chrome"><Link onClick={this.loadingHandler} style={style} to="/">Travel Locations</Link></li>
+								<li className="chrome"><Link style={style} to="/all-locations">All Locations</Link></li>
+								<li className="chrome" id="titlebar"><h2 className="chrome-title">React Travel App</h2></li>
 							</ul>
 						</div>
 					</nav>
