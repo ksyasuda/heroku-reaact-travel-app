@@ -15,7 +15,7 @@ li {
 	border: 2px solid black;
 	background-color: lightblue;
 	padding: 5px 5px;
-	width: 10%;
+	width: 11%;
 	text-align: center;
 	bottom: -10px;
 }
@@ -38,41 +38,6 @@ li {
 	border: none;
 }
 
-@media (max-width: 1249px) {
-	li {
-		position: relative;
-		list-style-type: none;
-		margin: 10px;
-		display: inline-block;
-		border: 2px solid black;
-		background-color: lightblue;
-		padding: 5px 5px;
-		width: 15%;
-		text-align: center;
-		bottom: -15px;
-	}
-	
-	#navbar {
-		position: relative;
-		background-color: rgb(40, 44, 52);
-		height: 100px;
-		top: -18px;
-	}
-
-	#titlebar {
-		/* left:-2px; */
-		margin-left: 35px;
-		font-weight: bold;
-		width: 20%;
-		padding-block: 7px 8px;
-		color: rgb(230, 122, 108);
-		font-size: large;
-		background: none;
-		border: none;
-		top: 15px;
-	}
-}
-
 @media (min-width: 1005px) {
 	li {
 		position: relative;
@@ -84,7 +49,7 @@ li {
 		padding: 5px 5px;
 		width: 15%;
 		text-align: center;
-		bottom: -12px;
+		top: 12px;
 	}
 	
 	#navbar {
@@ -119,7 +84,7 @@ li {
 		padding: 5px 5px;
 		width: 15%;
 		text-align: center;
-		bottom: 15px;
+		top: -15px;
 	}
 	
 	#navbar {
@@ -155,7 +120,7 @@ li {
 		padding: 5px 5px;
 		width: 13%;
 		text-align: center;
-		bottom: -15px;
+		top: 15px;
 		word-spacing: 35px;
 	}
 	
@@ -191,7 +156,7 @@ li {
 		padding: 5px 5px;
 		width: 15%;
 		text-align: center;
-		bottom: 8px;
+		top: -8px;
 		word-spacing: 35px;
 		left: -40px;
 	}
