@@ -5,7 +5,10 @@ import Button from '../../components/UI/Button/Button';
 import classes from './AllLocations.module.css';
 import {Redirect} from 'react-router-dom';
 import Spinner from '../../components/UI/Spinner/Spinner';
-
+import Name from '../../components/Name/Name';
+import Dates from '../../components/Dates/Dates';
+import Loc from '../../components/Loc/Loc';
+import Location from '../Location/Location';
 
 const { Map: LeafletMap, TileLayer, Marker, Popup, FeatureGroup } = ReactLeaflet
 
@@ -21,7 +24,9 @@ class AllLocations extends Component {
 		redirect: false,
 		nodes: [],
 		loading: null,
-		spinner: false
+		spinner: false,
+		locations: [],
+		dropdown: []
 	}
 
 	popup = async (lat, lng) => {
@@ -72,6 +77,18 @@ class AllLocations extends Component {
 		// console.log('markers set');
 		// console.log(this.state.markerGroup);
 	}
+
+	popupLinkHandler = (event) => {
+		event.preventDefault();
+		console.log('popup');
+		console.log(event.target);
+		let temp = event.target.children[0].children[0].innerText.substr(0,1);
+		// console.log(parseInt(temp, 10));
+		let marker = this.state.markers[temp-1];
+		//! find a way to set a popup from the click`
+		// this.popup(parseFloat(marker[0], 10), parseFloat(marker[1], 10));
+		// console.log(this.state.markerGroup)
+	}
 	
 
 	componentDidMount = () => {
@@ -84,10 +101,12 @@ class AllLocations extends Component {
 				// console.log('right after the get call');
 				let data = response.data;
 				// console.log(response);
-				let lat, lng, locName, place_id, time;
+				let lat, lng, locName, place_id, time, shortName;
 				let counter = 1;
 				let markers = [...this.state.markers];
 				let nodes = [...this.state.nodes];
+				let locations = [...this.state.locations];
+				let dropdown = [...this.state.dropdown];
 				for(let item of data) {
 					// console.log('item', item);
 					lat = item.lat;
@@ -95,45 +114,41 @@ class AllLocations extends Component {
 					locName = item.locName;
 					place_id = item.place_id;
 					time = item.time;
+					shortName = item.shortName;
 					let places = this.state.places;
-					// console.log(places);
-					if(!places.has(place_id)) {
-						places.set(place_id, locName);
-						this.setState({places:places});
-					}
-					// else {
-					// 	console.log('DUPLICATES!');
-					// 	const data = {place_id: item.place_id}
-					// 	const options = {
-					// 		method: 'POST',
-					// 		body: JSON.stringify(data),
-					// 		headers: {
-					// 			'Content-Type': 'application/json'
-					// 		}
-					// 	};
-					// 	axios.post('/remove', data).then(res => {
-					// 		console.log(res);
-					// 	});
-					// }
-					let root = document.createElement('div');
-					let loc = document.createElement('div');
-					let date = document.createElement('div');
-					let br = document.createElement('div');
-					let name = document.createElement('div');
+					// let root = document.createElement('div');
+					// let loc = document.createElement('div');
+					// let date = document.createElement('div');
+					// let br = document.createElement('div');
+					// let name = document.createElement('div');
 					// let ctr = document.createElement('div');
-					loc.innerHTML = `<p><strong>Latitude:</strong> <span id="lat">${item.lat}</span> <strong>|</strong> <strong>Longitude</Strong> <span id="lon">${item.lng}</span>`;
-					name.innerHTML = `<h1><strong><span id="counter">${counter++}.</span></strong>  ${locName}</h1>`;
-					br.innerHTML = '<br/>';
+					// loc.innerHTML = `<p><strong>Latitude:</strong> <span id="lat" className={classes.Lat}>${item.lat}</span> <strong>|</strong> <strong>Longitude:</Strong> <span className={classes.Lng} id="lon">${item.lng}</span>`;
+					let locs = <Loc lat={lat} lng={lng}/>;
+					let namee = <Name clicked={(event) => this.popupLinkHandler(event)} counter={counter} locName={locName} />;
+					// name.innerHTML = `<h1><strong><span id="counter">${counter++}.</span></strong>  ${locName}</h1>`;
+					// name = <Name clicked={this.popupLinkHandler} counter={counter++} locName={locName}/>
+					// br.innerHTML = '<br/>';
 					const dateStr = new Date(time).toLocaleString();
-					date.innerHTML = `<p><strong>${dateStr}</strong></p>`
-					loc.id = 'location';
-					date.id = 'date';
-					root.className = 'all-locations';
-					root.id = item.shortName;
-					root.append(name, date, br, loc, br);
-					nodes.push(root);
-					document.body.append(root);
+					let temp = dateStr.split(',');
+					const day = temp[0];
+					const timee = temp[1];
+					const newStr = `${timee} on ${day}`;
+					let datee = <Dates time={timee} day={day}/>;
+					// let datee = <Dates str={newStr}/>;
+					// date.innerHTML = `<p><strong>${newStr}</strong></p>`
+					// loc.className = classes.Location;
+					// name.className = classes.Name;
+					// date.className = classes.Date;
+					// root.className = classes.root;
+					// root.id = item.shortName;
+					// root.append(name, date, br, loc, br);
+					// nodes.push(root);
+					// document.body.append(root);
+					let l = <Location key={counter} Datee={datee} Loc={locs} Name={namee} />;
+					locations.push(l);
 					let latlng = [lat, lng];
+					let elt = `${counter++}.  ${shortName}`
+					dropdown.push(elt);
 					// let marker = (
 					// 	<Marker position={[lat,lng]} key={time}>
 					// 		<Popup onOpen={(event) => this.popup(event)}>
@@ -142,7 +157,7 @@ class AllLocations extends Component {
 					// );
 					markers.push(latlng);
 				}
-				this.setState({markers:markers, nodes:nodes});
+				this.setState({markers:markers,locations:locations,dropdown:dropdown});
 				// this.setMarkers();
 				// this.setGroup();
 			});
@@ -170,7 +185,7 @@ class AllLocations extends Component {
 
 	onViewportChangedHandler = viewport => {
 		if(this.state.popup) return;
-		console.log(viewport);
+		// console.log(viewport);
 		let lat = this.state.lat;
 		let lng = this.state.lng;
 		let zoom = this.state.zoom;
@@ -193,7 +208,7 @@ class AllLocations extends Component {
 		if(this.state.markers.length < 1) return;
 		let stuff = document.getElementById('select-num');
 		let num = parseInt(stuff.value, 10);
-		console.log('num', num);
+		// console.log('num', num);
 		// console.log(stuff.value);
 		const data = {entryNum: num};
 		const response = await axios.post(`/remove-elt`, data);
@@ -206,11 +221,12 @@ class AllLocations extends Component {
 	render() {
 		// console.log(this.state.markerGroup);
 		let ctr = 1;
+		let counter = 1;
 		return (
 			<div id="map-container">
 				<h2>All Locations</h2>
 				{this.state.redirect ? <Redirect to="/" exact/> : null}
-				<LeafletMap onViewportChanged={(viewport) => this.onViewportChangedHandler(viewport)} worldCopyJump={true} center={[this.state.lat, this.state.lng]} zoom={3} style={{'width':'80%', 'position':'relative', 'left':'10%', 'border':'1px solid hotpink'}}>
+				<LeafletMap id="map" onViewportChanged={(viewport) => this.onViewportChangedHandler(viewport)} worldCopyJump={true} center={[this.state.lat, this.state.lng]} zoom={3} style={{'width':'80%', 'position':'relative', 'left':'10%', 'border':'1px solid hotpink'}}>
 					<TileLayer
 					attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 					url='https://{s}.tile.osm.org/{z}/{x}/{y}.png'
@@ -236,19 +252,20 @@ class AllLocations extends Component {
 					</button>
 					<br/>
 					<select id="select-num" name="select-num" className={classes.Select}>
-						{this.state.nodes.length > 0 ? this.state.nodes.map(node => {
-							{/* console.log(node.children[0].children[0].innerText); */}
-							let name = node.id;
-							let num = node.children[0].children[0].children[0].children[0].innerText;
-							//* parse the string to an int and a .
-							let temp = num.split('.');
-							let inum = parseInt(temp[0], 10);
-							{/* console.log(inum); */}
-							return (<option key={num} className={classes.Option} name="select" value={inum}>{`${num} ${name}`}</option>);
+						{this.state.dropdown.length > 0 ? this.state.dropdown.map(elt => {
+							{/* console.log(elt); */}
+							let temp = elt.split('.');
+							let val = parseInt(temp[0], 10);
+							return (
+								<option key={val} className={classes.Option} name="select" value={val++}>
+									{elt}
+								</option>
+							);
+							{/* return (<option key={num} className={classes.Option} name="select" value={inum}>{`${num} ${name}`}</option>); */}
 						}) : null}
 					</select>
-					
 				</form>
+				{this.state.locations}
 			</div>
 		);
 	};

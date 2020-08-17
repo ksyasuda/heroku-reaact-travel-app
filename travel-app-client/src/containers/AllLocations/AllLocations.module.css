@@ -60,3 +60,31 @@
 	border: 5px solid black;
 	box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
 }
+
+.Name {
+	color: blue;
+	text-align: center;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.Names {
+	color: blue;
+	text-align: center;
+	background: none;
+	background-color: none;
+}
+
+.Date {
+	text-align: center;
+	font-size: x-large;
+}
+ 
+.Location {
+	text-align: center;
+	font-size: large;
+}
+
+.Location span {
+	color: red;
+}
