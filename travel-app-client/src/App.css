@@ -1,10 +1,20 @@
 .App {
-  text-align: center;
+	text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+	height: 40vmin;
+	pointer-events: none;
+}
+
+.website {
+	display: flex;
+	float: right;
+	position: relative;
+	text-decoration: none;
+	justify-content: center;
+	top: 24px;
+	left: -5%;
 }
 
 li {
@@ -29,13 +39,13 @@ li {
 
 #titlebar {
 	position: relative;
-	left:14.5%;
+	left: 14.5%;
 	font-weight: bold;
 	width: 20%;
 	padding-block: 7px 8px;
 	color: rgb(230, 122, 108);
 	font-size: large;
-	background:none;
+	background: none;
 	border: none;
 }
 
@@ -52,7 +62,7 @@ li {
 		text-align: center;
 		top: 12px;
 	}
-	
+
 	#navbar {
 		position: relative;
 		background-color: rgb(40, 44, 52);
@@ -62,7 +72,7 @@ li {
 
 	#titlebar {
 		position: relative;
-		left:25px;
+		left: 25px;
 		margin-left: 35px;
 		font-weight: bold;
 		width: 20%;
@@ -73,8 +83,9 @@ li {
 		border: none;
 		top: 15px;
 	}
-	@media all and (-webkit-min-device-pixel-ratio:0) and (min-resolution: .001dpcm) { 
-		.selector:not(*:root), .chrome {
+	@media all and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
+		.selector:not(*:root),
+		.chrome {
 			top: -10px;
 		}
 
@@ -100,7 +111,7 @@ li {
 		text-align: center;
 		top: 0px;
 	}
-	
+
 	#navbar {
 		position: relative;
 		background-color: rgb(40, 44, 52);
@@ -121,8 +132,9 @@ li {
 		top: 4px;
 		left: -2px;
 	}
-	@media all and (-webkit-min-device-pixel-ratio:0) and (min-resolution: .001dpcm) { 
-		.selector:not(*:root), .chrome {
+	@media all and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
+		.selector:not(*:root),
+		.chrome {
 			top: -40px;
 		}
 
@@ -148,7 +160,7 @@ li {
 		text-align: center;
 		top: -15px;
 	}
-	
+
 	#navbar {
 		position: relative;
 		background-color: rgb(40, 44, 52);
@@ -185,7 +197,7 @@ li {
 		top: 25px;
 		word-spacing: 35px;
 	}
-	
+
 	#navbar {
 		position: relative;
 		background-color: rgb(40, 44, 52);
@@ -194,7 +206,7 @@ li {
 	}
 
 	#titlebar {
-		left:-5px;
+		left: -5px;
 		top: 10px;
 		font-weight: bold;
 		width: 25%;
@@ -222,7 +234,7 @@ li {
 		word-spacing: 35px;
 		left: -40px;
 	}
-	
+
 	#navbar {
 		position: relative;
 		background-color: rgb(40, 44, 52);
@@ -231,7 +243,7 @@ li {
 	}
 
 	#titlebar {
-		left:-40px;
+		left: -40px;
 		top: 5px;
 		font-weight: bold;
 		width: 25%;
@@ -243,7 +255,6 @@ li {
 		word-spacing: 0px;
 	}
 }
-
 
 #title {
 	color: blue;
@@ -307,7 +318,7 @@ li {
 		word-spacing: 20px;
 		left: -40px;
 	}
-	
+
 	#navbar {
 		position: relative;
 		background-color: rgb(40, 44, 52);
@@ -316,7 +327,7 @@ li {
 	}
 
 	#titlebar {
-		left:-59px;
+		left: -59px;
 		top: 5px;
 		font-weight: bold;
 		width: 25%;
@@ -328,8 +339,9 @@ li {
 		word-spacing: 0px;
 	}
 
-	@media all and (-webkit-min-device-pixel-ratio:0) and (min-resolution: .001dpcm) { 
-		.selector:not(*:root), .chrome {
+	@media all and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
+		.selector:not(*:root),
+		.chrome {
 			top: -35px;
 			left: -50px;
 			margin: 5px;
@@ -345,9 +357,6 @@ li {
 	}
 }
 
-
-
-
 #title {
 	color: blue;
 	border: 1px solid black;
@@ -359,36 +368,36 @@ li {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+	.App-logo {
+		animation: App-logo-spin infinite 20s linear;
+	}
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+	background-color: #282c34;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: calc(10px + 2vmin);
+	color: white;
 }
 
 .App-link {
-  color: #61dafb;
+	color: #61dafb;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }
 
 .leaflet-container {
 	height: 400px;
 	width: 100%;
-  }
+}
