@@ -57,15 +57,15 @@ class MyMap extends Component {
 				console.log("getting location");
 				const response = await axios.get(geocodingUrl);
 				console.log(response);
-				let nice;
-				if (response.data.results[0].formatted_address === undefined) {
-					nice = response.data;
+				let nice = response.data.results[0].formatted_address;
+				if (nice === undefined) {
+					nice = response.data.plus_code;
 				}
 				console.log("location found", nice);
 				this.setState({ loading: null });
 				// console.log(response.data.results[0].formatted_address);
 				// console.log(response);
-				const address = response.data.results[0].formatted_address;
+				const address = nice;
 				// console.log(response.data.results[0].address_components);
 				// const shortName = response.data.results[0].address_components[0].long_name;
 				let temp = address.split(",");
