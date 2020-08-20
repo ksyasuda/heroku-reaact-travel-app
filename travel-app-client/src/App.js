@@ -50,7 +50,8 @@ class App extends Component {
 											fontWeight: "bold",
 											fontSize: "regular",
 										}}
-										href="http://localhost:8000"
+										// href="http://localhost:8000"
+										href="https://website-966f5.web.app/"
 									>
 										Go to Website
 									</a>
