@@ -54,12 +54,17 @@ class MyMap extends Component {
 					</Popup>
 				);
 				this.setState({ loading: loading });
+				console.log("getting location");
 				const response = await axios.get(geocodingUrl);
+				console.log(
+					"location found",
+					response.data.results[0].formatted_address
+				);
 				this.setState({ loading: null });
 				// console.log(response.data.results[0].formatted_address);
 				// console.log(response);
 				const address = response.data.results[0].formatted_address;
-				console.log(response.data.results[0].address_components);
+				// console.log(response.data.results[0].address_components);
 				// const shortName = response.data.results[0].address_components[0].long_name;
 				let temp = address.split(",");
 				let shortName;
