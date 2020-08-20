@@ -57,9 +57,11 @@ class MyMap extends Component {
 				console.log("getting location");
 				const response = await axios.get(geocodingUrl);
 				console.log(response);
-				let nice = response.data.results[0].formatted_address;
-				if (nice === undefined) {
+				let nice;
+				if (response.data.results[0].formatted_address === undefined) {
 					nice = response.data.plus_code;
+				} else {
+					nice = response.data.results[0].formatted_address;
 				}
 				console.log("location found", nice);
 				this.setState({ loading: null });
