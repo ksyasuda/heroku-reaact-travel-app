@@ -80,7 +80,9 @@ class MyMap extends Component {
 				else if (temp.length < 4) {
 					shortName = temp[0];
 				}
-				const id = response.data.results[0].place_id;
+				const id =
+					response.data.results[0].place_id ||
+					response.data.plus_code.global_code;
 				// console.log(lat, lng);
 				this.setState({
 					lat: lat,
