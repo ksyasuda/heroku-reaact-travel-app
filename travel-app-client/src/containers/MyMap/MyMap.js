@@ -58,7 +58,7 @@ class MyMap extends Component {
 				const response = await axios.get(geocodingUrl);
 				console.log(response);
 				let nice;
-				if (!response.data.results[0].formatted_address) {
+				if (response.data.results.length === 0) {
 					nice = response.data.plus_code;
 				} else {
 					nice = response.data.results[0].formatted_address;
