@@ -1,8 +1,8 @@
 .Button {
 	background-color: green;
-    color: blue;
+	color: blue;
 	text-align: center;
-    cursor: pointer;
+	cursor: pointer;
 	font-weight: bold;
 	padding: 3px;
 	width: 45%;
@@ -34,13 +34,17 @@
 }
 
 .Select {
-	background-color: green;
-	color: blue;
+	color: #e6761c;
+	font-weight: bold;
+	/* background-color: green; */
+	/* color: blue; */
+	background-color: #3e55b7;
 	width: 60%;
 	height: 40px;
 	font-weight: bold;
-	font-size: x-large;
+	font-size: 16px;
 	margin: none;
+	margin-top: 10px;
 	position: relative;
 	left: -2px;
 	box-sizing: border-box;
@@ -58,7 +62,7 @@
 
 .Option {
 	border: 5px solid black;
-	box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
+	box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
 }
 
 .Name {
@@ -79,7 +83,7 @@
 	text-align: center;
 	font-size: x-large;
 }
- 
+
 .Location {
 	text-align: center;
 	font-size: large;

@@ -1,48 +1,116 @@
-import React, { Component } from "react";
-import "./App.css";
-import MyMap from "./containers/MyMap/MyMap";
-import { BrowserRouter } from "react-router-dom";
-import { Link, Route, Switch } from "react-router-dom";
-import AllLocations from "./containers/AllLocations/AllLocations";
-// import Button from './components/UI/Button/Button';
+import React, { Component } from "react"
+import "./App.css"
+import MyMap from "./containers/MyMap/MyMap"
+import { BrowserRouter } from "react-router-dom"
+import { Link, Route, Switch, Redirect } from "react-router-dom"
+import AllLocations from "./containers/AllLocations/AllLocations"
+import classes from "./app.module.css"
+import AppBar from "@material-ui/core/AppBar"
+import Toolbar from "@material-ui/core/Toolbar"
+import Button from "@material-ui/core/Button"
 
 class App extends Component {
 	state = {
 		useDarkMode: false,
-	};
+		showMenu: false,
+		anchorEl: null,
+	}
+
+	handleClose = () => {
+		console.log("closing menu")
+		this.setState({ showMenu: false })
+	}
+
+	handleClick = event => {
+		console.log("handling click")
+		this.setState({ showMenu: true, anchorEl: event.currentTarget })
+	}
 
 	render() {
-		let style = {
-			color: "green",
-			textDecoration: "none",
+		const style = {
+			padding: "10px",
+			marginTop: "5px",
+			marginRight: "15px",
+			marginBottom: "5px",
+			color: "#e6761c",
 			fontWeight: "bold",
-		};
+		}
 		return (
 			<BrowserRouter>
 				<header>
 					<nav>
-						<div id="navbar">
+						<AppBar
+							position='static'
+							style={{ backgroundColor: "rebeccapurple" }}
+						>
+							<div className={classes.Container}>
+								<h1 className={classes.Title}>
+									<Link
+										to='/'
+										className={classes.Link}
+										style={{ color: "dodgerblue" }}
+									>
+										Sudacode Travel App
+									</Link>
+								</h1>
+								<Toolbar style={{ height: "15vh" }}>
+									<Button
+										style={style}
+										color='primary'
+										variant='outlined'
+									>
+										<Link
+											to='/'
+											className={classes.Link}
+											style={{
+												color: "#e6761c",
+												fontWeight: "bold",
+											}}
+										>
+											Search/Locate
+										</Link>
+									</Button>
+									<Button
+										style={style}
+										color='primary'
+										variant='outlined'
+									>
+										<Link
+											className={classes.Link}
+											to='/all-locations'
+											style={{
+												color: "#e6761c",
+												fontWeight: "bold",
+											}}
+										>
+											All Locations
+										</Link>
+									</Button>
+								</Toolbar>
+							</div>
+						</AppBar>
+						{/* <div id='navbar'>
 							<ul>
-								<li className="chrome">
+								<li className='chrome'>
 									<Link
 										onClick={this.loadingHandler}
 										style={style}
-										to="/"
+										to='/'
 									>
 										Travel Locations
 									</Link>
 								</li>
-								<li className="chrome">
-									<Link style={style} to="/all-locations">
+								<li className='chrome'>
+									<Link style={style} to='/all-locations'>
 										All Locations
 									</Link>
 								</li>
-								<li className="chrome" id="titlebar">
-									<h2 className="chrome-title">
+								<li className='chrome' id='titlebar'>
+									<h2 className='chrome-title'>
 										React Travel App
 									</h2>
 								</li>
-								<li className="website">
+								<li className='website'>
 									<a
 										style={{
 											textDecoration: "none",
@@ -51,18 +119,18 @@ class App extends Component {
 											fontSize: "regular",
 										}}
 										// href="http://localhost:8000"
-										href="https://website-966f5.web.app/"
+										href='https://website-966f5.web.app/'
 									>
 										Go to Website
 									</a>
 								</li>
 							</ul>
-						</div>
+						</div> */}
 					</nav>
 				</header>
-				<div id="container" className="App">
+				<div id='container' className='App'>
 					<Switch>
-						<Route path="/all-locations" component={AllLocations} />
+						<Route path='/all-locations' component={AllLocations} />
 						{/* <Route
 							path="/website"
 							component={() => {
@@ -70,13 +138,13 @@ class App extends Component {
 								return null;
 							}}
 						/> */}
-						<Route path="/" component={MyMap} />
+						<Route path='/' component={MyMap} />
 					</Switch>
 					{/* <MyMap /> */}
 				</div>
 			</BrowserRouter>
-		);
+		)
 	}
 }
 
-export default App;
+export default App

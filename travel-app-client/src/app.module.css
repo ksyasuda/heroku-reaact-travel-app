@@ -1,0 +1,22 @@
+.Button {
+	padding: 5px;
+	margin: 10px;
+}
+
+.Title {
+	text-align: center;
+	position: relative;
+	/* background-color: black; */
+	padding: 5px;
+	margin-left: 10px;
+	color: dodgerblue;
+	align-content: center;
+}
+
+.Container {
+	display: flex;
+}
+
+.Link {
+	text-decoration: none;
+}
