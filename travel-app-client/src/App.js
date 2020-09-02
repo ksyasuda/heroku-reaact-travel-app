@@ -1,33 +1,33 @@
-import React, { Component } from "react"
-import "./App.css"
-import MyMap from "./containers/MyMap/MyMap"
-import { BrowserRouter } from "react-router-dom"
-import { Link, Route, Switch, Redirect } from "react-router-dom"
-import AllLocations from "./containers/AllLocations/AllLocations"
-import classes from "./app.module.css"
-import AppBar from "@material-ui/core/AppBar"
-import Toolbar from "@material-ui/core/Toolbar"
-import Button from "@material-ui/core/Button"
-import AddLocationIcon from "@material-ui/icons/AddLocation"
-import MapIcon from "@material-ui/icons/Map"
-import WebIcon from "@material-ui/icons/Web"
+import React, { Component } from "react";
+import "./App.css";
+import MyMap from "./containers/MyMap/MyMap";
+import { BrowserRouter } from "react-router-dom";
+import { Link, Route, Switch, Redirect } from "react-router-dom";
+import AllLocations from "./containers/AllLocations/AllLocations";
+import classes from "./app.module.css";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Button from "@material-ui/core/Button";
+import AddLocationIcon from "@material-ui/icons/AddLocation";
+import MapIcon from "@material-ui/icons/Map";
+import WebIcon from "@material-ui/icons/Web";
 
 class App extends Component {
 	state = {
 		useDarkMode: false,
 		showMenu: false,
 		anchorEl: null,
-	}
+	};
 
 	handleClose = () => {
-		console.log("closing menu")
-		this.setState({ showMenu: false })
-	}
+		console.log("closing menu");
+		this.setState({ showMenu: false });
+	};
 
-	handleClick = event => {
-		console.log("handling click")
-		this.setState({ showMenu: true, anchorEl: event.currentTarget })
-	}
+	handleClick = (event) => {
+		console.log("handling click");
+		this.setState({ showMenu: true, anchorEl: event.currentTarget });
+	};
 
 	render() {
 		const style = {
@@ -37,28 +37,32 @@ class App extends Component {
 			marginBottom: "5px",
 			color: "#e6761c",
 			fontWeight: "bold",
-		}
+		};
 		return (
 			<BrowserRouter>
 				<header>
 					<nav>
 						<AppBar
-							position='static'
+							position="static"
 							style={{ backgroundColor: "rebeccapurple" }}
 						>
 							<div className={classes.Container}>
 								<h1 className={classes.Title}>
 									<Link
-										to='/'
+										to="/"
 										className={classes.Link}
-										style={{ color: "dodgerblue" }}
+										style={{
+											color: "dodgerblue",
+											position: "relative",
+											top: "26%",
+										}}
 									>
 										Sudacode Travel App
 									</Link>
 								</h1>
 								<Toolbar style={{ height: "15vh" }}>
 									<Link
-										to='/'
+										to="/"
 										className={classes.Link}
 										style={{
 											color: "#e6761c",
@@ -67,8 +71,8 @@ class App extends Component {
 									>
 										<Button
 											style={style}
-											color='primary'
-											variant='outlined'
+											color="primary"
+											variant="outlined"
 											startIcon={<AddLocationIcon />}
 										>
 											Search/Locate
@@ -76,7 +80,7 @@ class App extends Component {
 									</Link>
 									<Link
 										className={classes.Link}
-										to='/all-locations'
+										to="/all-locations"
 										style={{
 											color: "#e6761c",
 											fontWeight: "bold",
@@ -84,8 +88,8 @@ class App extends Component {
 									>
 										<Button
 											style={style}
-											color='primary'
-											variant='outlined'
+											color="primary"
+											variant="outlined"
 											startIcon={<MapIcon />}
 										>
 											All Locations
@@ -93,11 +97,11 @@ class App extends Component {
 									</Link>
 									<Button
 										style={style}
-										color='primary'
-										variant='outlined'
+										color="primary"
+										variant="outlined"
 										startIcon={<WebIcon />}
 										onClick={() => (
-											<Redirect to='https://ww.sudacode.com' />
+											<Redirect to="https://ww.sudacode.com" />
 										)}
 									>
 										<a
@@ -107,7 +111,7 @@ class App extends Component {
 												fontWeight: "bold",
 												color: "#e6761c",
 											}}
-											href='https://www.sudacode.com'
+											href="https://www.sudacode.com"
 										>
 											To Website
 										</a>
@@ -154,9 +158,9 @@ class App extends Component {
 						</div> */}
 					</nav>
 				</header>
-				<div id='container' className='App'>
+				<div id="container" className="App">
 					<Switch>
-						<Route path='/all-locations' component={AllLocations} />
+						<Route path="/all-locations" component={AllLocations} />
 						{/* <Route
 							path="/website"
 							component={() => {
@@ -164,13 +168,13 @@ class App extends Component {
 								return null;
 							}}
 						/> */}
-						<Route path='/' component={MyMap} />
+						<Route path="/" component={MyMap} />
 					</Switch>
 					{/* <MyMap /> */}
 				</div>
 			</BrowserRouter>
-		)
+		);
 	}
 }
 
-export default App
+export default App;

@@ -50,6 +50,7 @@
 	box-sizing: border-box;
 	border-left: 2px solid black;
 	border-bottom: 2px solid black;
+	top: 5px;
 }
 
 .Select:hover {
