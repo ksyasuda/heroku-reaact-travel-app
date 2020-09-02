@@ -8,6 +8,9 @@ import classes from "./app.module.css"
 import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
 import Button from "@material-ui/core/Button"
+import AddLocationIcon from "@material-ui/icons/AddLocation"
+import MapIcon from "@material-ui/icons/Map"
+import WebIcon from "@material-ui/icons/Web"
 
 class App extends Component {
 	state = {
@@ -54,42 +57,48 @@ class App extends Component {
 									</Link>
 								</h1>
 								<Toolbar style={{ height: "15vh" }}>
-									<Button
-										style={style}
-										color='primary'
-										variant='outlined'
+									<Link
+										to='/'
+										className={classes.Link}
+										style={{
+											color: "#e6761c",
+											fontWeight: "bold",
+										}}
 									>
-										<Link
-											to='/'
-											className={classes.Link}
-											style={{
-												color: "#e6761c",
-												fontWeight: "bold",
-											}}
+										<Button
+											style={style}
+											color='primary'
+											variant='outlined'
+											startIcon={<AddLocationIcon />}
 										>
 											Search/Locate
-										</Link>
-									</Button>
-									<Button
-										style={style}
-										color='primary'
-										variant='outlined'
+										</Button>
+									</Link>
+									<Link
+										className={classes.Link}
+										to='/all-locations'
+										style={{
+											color: "#e6761c",
+											fontWeight: "bold",
+										}}
 									>
-										<Link
-											className={classes.Link}
-											to='/all-locations'
-											style={{
-												color: "#e6761c",
-												fontWeight: "bold",
-											}}
+										<Button
+											style={style}
+											color='primary'
+											variant='outlined'
+											startIcon={<MapIcon />}
 										>
 											All Locations
-										</Link>
-									</Button>
+										</Button>
+									</Link>
 									<Button
 										style={style}
 										color='primary'
 										variant='outlined'
+										startIcon={<WebIcon />}
+										onClick={() => (
+											<Redirect to='https://ww.sudacode.com' />
+										)}
 									>
 										<a
 											className={classes.ToWebsite}
