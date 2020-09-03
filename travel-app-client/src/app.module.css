@@ -20,3 +20,14 @@
 .Link {
 	text-decoration: none;
 }
+
+@media (max-width: 600px) {
+	.Container {
+		position: relative;
+		top: -10px;
+	}
+	.NavContainer {
+		display: none;
+		background-color: black;
+	}
+}
