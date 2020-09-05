@@ -261,7 +261,9 @@ class MyMap extends Component {
 		// const position = [this.state.lat, this.state.lng];
 		return (
 			<div>
-				<h2>Travel Locations</h2>
+				<h2 style={{ color: "rgb(189, 140, 72)" }}>
+					Find/Search Locations
+				</h2>
 				<LeafletMap
 					center={[this.state.lat, this.state.lng]}
 					zoom={this.state.zoom}
@@ -313,7 +315,9 @@ class MyMap extends Component {
 				>
 					Zoom In
 				</Button>
-				<h2>Or Search For A Location Below</h2>
+				<h2 style={{ color: "rgb(189, 140, 72)" }}>
+					Or Search For A Location Below
+				</h2>
 				<form
 					id='searchForm'
 					type='text'
@@ -326,19 +330,32 @@ class MyMap extends Component {
 						name='serach'
 					/>
 					<br />
-					<button
+					<Button
 						onClick={this.onSearchHandler}
-						type='button'
+						variant='contained'
 						id='send'
-						style={{ marginTop: "10px" }}
+						color='primary'
+						style={{ marginTop: "10px", color: "#e6761c" }}
 					>
 						Search
-					</button>
+					</Button>
 				</form>
-				<p style={{ fontWeight: "bold", fontSize: "larger" }}>
+				<p
+					style={{
+						fontWeight: "bold",
+						fontSize: "larger",
+						color: "rgb(132, 134, 115)",
+					}}
+				>
 					Latitude: <span id='lat'>{this.state.lat}</span>
 				</p>
-				<p style={{ fontWeight: "bold", fontSize: "larger" }}>
+				<p
+					style={{
+						fontWeight: "bold",
+						fontSize: "larger",
+						color: "rgb(132, 134, 115)",
+					}}
+				>
 					Longitude: <span id='lng'>{this.state.lng}</span>
 				</p>
 			</div>

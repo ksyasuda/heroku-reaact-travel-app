@@ -245,7 +245,7 @@ class AllLocations extends Component {
 		let counter = 1
 		return (
 			<div id='map-container'>
-				<h2>All Locations</h2>
+				<h2 style={{ color: "rgb(189, 140, 72)" }}>All Locations</h2>
 				{this.state.redirect ? <Redirect to='/' exact /> : null}
 				<LeafletMap
 					id='map'

@@ -50,114 +50,135 @@ class App extends Component {
 		}
 		return (
 			<BrowserRouter>
-				<header>
-					<nav>
-						<AppBar
-							position='static'
-							style={{ backgroundColor: "rebeccapurple" }}
-						>
-							<div className={classes.Container}>
-								<h1 className={classes.Title}>
-									<Link
-										to='/'
-										className={classes.Link}
-										style={{
-											color: "dodgerblue",
-											position: "relative",
-											top: "26%",
-										}}
-									>
-										Sudacode Travel App
-									</Link>
-								</h1>
-								<div className={classes.NavContainer}>
-									<Toolbar style={{ height: "15vh" }}>
+				<div className={classes.Cont}>
+					<header>
+						<nav>
+							<AppBar
+								position='static'
+								style={{ backgroundColor: "rebeccapurple" }}
+							>
+								<div className={classes.Container}>
+									<h1 className={classes.Title}>
 										<Link
 											to='/'
 											className={classes.Link}
 											style={{
-												color: "#e6761c",
-												fontWeight: "bold",
+												color: "dodgerblue",
+												position: "relative",
+												top: "26%",
 											}}
 										>
-											<Button
-												style={style}
-												color='primary'
-												variant='outlined'
-												startIcon={<AddLocationIcon />}
-											>
-												Search/Locate
-											</Button>
+											Sudacode Travel App
 										</Link>
-										<Link
-											className={classes.Link}
-											to='/all-locations'
-											style={{
-												color: "#e6761c",
-												fontWeight: "bold",
-											}}
-										>
-											<Button
-												style={style}
-												color='primary'
-												variant='outlined'
-												startIcon={<MapIcon />}
-											>
-												All Locations
-											</Button>
-										</Link>
-										<Button
-											style={style}
-											color='primary'
-											variant='outlined'
-											startIcon={<WebIcon />}
-											onClick={() => (
-												<Redirect to='https://ww.sudacode.com' />
-											)}
-										>
-											<a
-												className={classes.ToWebsite}
+									</h1>
+									<div className={classes.NavContainer}>
+										<Toolbar style={{ height: "15vh" }}>
+											<Link
+												to='/'
+												className={classes.Link}
 												style={{
-													textDecoration: "none",
-													fontWeight: "bold",
 													color: "#e6761c",
+													fontWeight: "bold",
 												}}
-												href='https://www.sudacode.com'
 											>
-												To Website
-											</a>
-										</Button>
-									</Toolbar>
-								</div>
-								<Button
-									style={{
-										height: "40px",
-										position: "relative",
-										top: "35px",
-									}}
-									color='primary'
-									variant='contained'
-									onClick={this.openMenuHandler}
-								>
-									Menu
-								</Button>
-								<div className={classes.SideDrawer}>
-									<Drawer
-										anchor='left'
-										open={this.state.open}
-										onClose={this.closeHandler}
+												<Button
+													style={style}
+													color='primary'
+													variant='outlined'
+													startIcon={
+														<AddLocationIcon />
+													}
+												>
+													Search/Locate
+												</Button>
+											</Link>
+											<Link
+												className={classes.Link}
+												to='/all-locations'
+												style={{
+													color: "#e6761c",
+													fontWeight: "bold",
+												}}
+											>
+												<Button
+													style={style}
+													color='primary'
+													variant='outlined'
+													startIcon={<MapIcon />}
+												>
+													All Locations
+												</Button>
+											</Link>
+											<Button
+												style={style}
+												color='primary'
+												variant='outlined'
+												startIcon={<WebIcon />}
+												onClick={() => (
+													<Redirect to='https://ww.sudacode.com' />
+												)}
+											>
+												<a
+													className={
+														classes.ToWebsite
+													}
+													style={{
+														textDecoration: "none",
+														fontWeight: "bold",
+														color: "#e6761c",
+													}}
+													href='https://www.sudacode.com'
+												>
+													To Website
+												</a>
+											</Button>
+										</Toolbar>
+									</div>
+									<Button
+										style={{
+											height: "40px",
+											position: "relative",
+											top: "35px",
+										}}
+										color='primary'
+										variant='contained'
+										onClick={this.openMenuHandler}
 									>
-										<Button
-											color='secondary'
-											variant='outlined'
+										Menu
+									</Button>
+									<div className={classes.SideDrawer}>
+										<Drawer
+											anchor='left'
+											open={this.state.open}
+											onClose={this.closeHandler}
 										>
-											Test
-										</Button>
-									</Drawer>
+											<Link
+												className={classes.Links}
+												to='/'
+											>
+												<Button
+													color='secondary'
+													variant='contained'
+												>
+													Find Location
+												</Button>
+											</Link>
+											<Link
+												className={classes.Links}
+												to='/all-locations/'
+											>
+												<Button
+													color='secondary'
+													variant='contained'
+												>
+													All Locations
+												</Button>
+											</Link>
+										</Drawer>
+									</div>
 								</div>
-							</div>
-						</AppBar>
-						{/* <div id='navbar'>
+							</AppBar>
+							{/* <div id='navbar'>
 							<ul>
 								<li className='chrome'>
 									<Link
@@ -194,21 +215,25 @@ class App extends Component {
 								</li>
 							</ul>
 						</div> */}
-					</nav>
-				</header>
-				<div id='container' className='App'>
-					<Switch>
-						<Route path='/all-locations' component={AllLocations} />
-						{/* <Route
+						</nav>
+					</header>
+					<div id='container' className='App'>
+						<Switch>
+							<Route
+								path='/all-locations'
+								component={AllLocations}
+							/>
+							{/* <Route
 							path="/website"
 							component={() => {
 								window.location = "http://localhost:8000";
 								return null;
 							}}
 						/> */}
-						<Route path='/' component={MyMap} />
-					</Switch>
-					{/* <MyMap /> */}
+							<Route path='/' component={MyMap} />
+						</Switch>
+						{/* <MyMap /> */}
+					</div>
 				</div>
 			</BrowserRouter>
 		)
